@@ -86,15 +86,15 @@ galleryContainer.addEventListener('click', (event) => {
   console.log(originalImageUrl); 
 });
 
-function openModal(src) {
- const instance = basicLightbox.create(`
-    <div class="modal">
-        <p>
-            Your first lightbox with just a few lines of code.
-            Yes, it's really that simple.
-        </p>
-    </div>
-`)
+galleryContainer.addEventListener('click', (event) => {
+  event.preventDefault(); 
 
-instance.show()
-}
+  const img = event.target.closest('.gallery-image'); 
+  if (!img) return; 
+
+  const instance = basicLightbox.create(`
+    <img src="${img.dataset.source}" alt="${img.alt}" width="800" height="600">
+  `); 
+
+  instance.show(); 
+});

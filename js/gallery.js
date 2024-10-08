@@ -64,37 +64,28 @@ const images = [
   },
 ];
 
-const galleryMarking = document.querySelector('.gallery');
+const galleryContainer = document.querySelector('.gallery');
 
-galleryMarking.innerHTML = images.map(({ preview, original, description }) => `
+galleryContainer.innerHTML = images
+  .map(
+    ({ preview, original, description }) => `
   <li class="gallery-item">
     <a class="gallery-link" href="${original}">
       <img class="gallery-image" src="${preview}" data-source="${original}" alt="${description}" />
     </a>
   </li>
-`).join('');
+`
+  )
+  .join('');
 
-galleryCotainer.insertAdjacentHTML('beforeend', galleryMarking);
-
-galleryContainer.addEventListener('click', (event) => {
-  event.preventDefault(); 
-
-  const isGalleryImage = event.target.classList.contains('gallery-image');
-  if (!isGalleryImage) return;
-
-  const originalImageUrl = event.target.dataset.source; 
-  console.log(originalImageUrl); 
-});
-
-galleryContainer.addEventListener('click', (event) => {
-  event.preventDefault(); 
-
-  const img = event.target.closest('.gallery-image'); 
-  if (!img) return; 
+galleryContainer.addEventListener('click', event => {
+  event.preventDefault();
+  const img = event.target;
+  if (img.nodeName !== 'IMG') return;
 
   const instance = basicLightbox.create(`
     <img src="${img.dataset.source}" alt="${img.alt}" width="800" height="600">
-  `); 
+  `);
 
-  instance.show(); 
+  instance.show();
 });
